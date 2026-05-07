@@ -1,4 +1,4 @@
-package cl.sda1085.carritos.Repository;
+package cl.sda1085.carritos.repository;
 
 import cl.sda1085.carritos.model.Carrito;
 import org.springframework.data.jpa.repository.JpaRepository;
