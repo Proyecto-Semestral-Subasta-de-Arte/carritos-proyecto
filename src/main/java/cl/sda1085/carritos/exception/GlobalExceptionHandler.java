@@ -17,8 +17,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CarritoNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleNotFound(CarritoNotFoundException ex) {
         Map<String, String> error = new HashMap<>();
-        error.put("error", "Item no encontrado");
-        error.put("mensaje", ex.getMessage());
+        error.put("ERROR", "Item no encontrado.");
+        error.put("MENSAJE", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
@@ -40,8 +40,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGeneric(Exception ex) {
         Map<String, String> error = new HashMap<>();
-        error.put("error", "Error interno en Carritos");
-        error.put("detalle", ex.getMessage());
+        error.put("ERROR", "Error interno en Carritos");
+        error.put("DETALLE", ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

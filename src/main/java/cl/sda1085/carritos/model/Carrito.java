@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Carrito {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,7 +36,7 @@ public class Carrito {
     private LocalDateTime fechaAgregado;
 
     @Column(nullable = false)
-    private String estado; // activo, comprado y abandonado
+    private String estado;  //ACTIVO, COMPRADO y ABANDONADO.
 
     @PrePersist
     protected void onCreate() {

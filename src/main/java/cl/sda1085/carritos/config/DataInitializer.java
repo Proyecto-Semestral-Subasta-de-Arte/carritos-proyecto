@@ -77,9 +77,40 @@ public class DataInitializer implements CommandLineRunner {
             "ABANDONADO"
     );
 
-        carritoRepository.saveAll(List.of(item1, item2, item3, item4, item5));
+    Carrito item6 = new Carrito(
+            null,
+            14L,
+            14L,
+            1,
+            new BigDecimal("800000.00"),
+            LocalDateTime.now(),
+            "ACTIVO"
+    );
 
-        log.info("¡Éxito! Se han registrado 5 registros en la base de datos de Carritos.");
+    Carrito item7 = new Carrito(
+            null,
+            5L,
+            3L,
+            1,
+            new BigDecimal("500000.00"),
+            LocalDateTime.now().minusDays(3),
+            "COMPRADO"
+    );
+
+    Carrito item8 = new Carrito(
+            null,
+            8L,
+            9L,
+            1,
+            new BigDecimal("600000.00"),
+            LocalDateTime.now().minusDays(7),
+            "ABANDONADO"
+    );
+
+        //Agregamos todos los elementos a la lista de guardado
+        carritoRepository.saveAll(List.of(item1, item2, item3, item4, item5, item6, item7, item8));
+
+        log.info("¡Éxito! Se han registrado 8 registros en la base de datos.");
         log.info("Sincronización lógica completada: Productos y precios mapeados correctamente.");
     }
 }

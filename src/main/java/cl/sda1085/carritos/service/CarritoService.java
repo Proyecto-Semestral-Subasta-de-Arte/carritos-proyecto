@@ -74,6 +74,7 @@ public class CarritoService {
                 .map(existente -> {
                     int nuevaCantidad = existente.getCantidad() + (dto.getCantidad() != null ? dto.getCantidad() : 1);
                     existente.setCantidad(nuevaCantidad);
+
                     log.info("El producto ya existía en el carrito. Incrementando cantidad a: {}", nuevaCantidad);
                     return convertirADTO(carritoRepository.save(existente));
                 })
@@ -154,6 +155,7 @@ public class CarritoService {
     @Transactional
     public void vaciarCarritoPorIdUsuario(Long idUsuario) {
         log.warn("¡Operación Crítica! Vaciando completamente todos los registros del usuario ID: {}", idUsuario);
+
         carritoRepository.deleteByIdUsuario(idUsuario);
         log.info("El carrito completo del usuario ID: {} ha sido vaciado del sistema", idUsuario);
     }
@@ -161,6 +163,7 @@ public class CarritoService {
     //Encontrar un ítem específico activo/estado para un usuario
     public CarritoResponseDTO buscarItemEspecifico(Long idUsuario, Long idProducto, String estado) {
         log.info("Buscando existencia de ítem único -> Usuario: {}, Producto: {}, Estado: {}", idUsuario, idProducto, estado);
+
         return carritoRepository.findByIdUsuarioAndIdProductoAndEstado(idUsuario, idProducto, estado)
                 .map(this::convertirADTO)
                 .orElseThrow(() -> {

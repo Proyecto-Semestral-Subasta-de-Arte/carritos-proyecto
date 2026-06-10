@@ -3,6 +3,9 @@ package cl.sda1085.carritos.controller;
 import cl.sda1085.carritos.dto.CarritoRequestDTO;
 import cl.sda1085.carritos.dto.CarritoResponseDTO;
 import cl.sda1085.carritos.service.CarritoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -12,29 +15,55 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/api/carritos")
 @RequiredArgsConstructor
+@Tag(name = "Carritos", description = "Controlador para la gestión y trazabilidad de ítems en el carrito de compras.")
 public class CarritoController {
 
+    //Conexión con 'service'
     private final CarritoService carritoService;
 
+    @Operation(summary = "Obtener un ítem de carrito por su ID", description = "Retorna los detalles de un ítem del carrito junto con los enlaces HATEOAS de navegación.")
+    @ApiResponse(responseCode = "200", description = "Ítem localizado con éxito.")
+    @ApiResponse(responseCode = "404", description = "El ítem del carrito solicitado no existe.")
+    @GetMapping("/{id}")
+    public ResponseEntity<CarritoResponseDTO> obtenerCarritoPorId(@PathVariable Long id) {
+
+        //Buscar y desenvolver el 'optional' de forma segura
+        CarritoResponseDTO dto = carritoService.obtenerPorId(id);
+
+        //HATEOAS
+        dto.add(linkTo(methodOn(CarritoController.class).obtenerCarritoPorId(id)).withSelfRel());
+        dto.add(linkTo(methodOn(CarritoController.class).listarTodosLosCarritos()).withRel("lista-completa-carritos"));
+
+        return ResponseEntity.ok(dto);
+    }
+
+    @Operation(summary = "Listar todos los ítems de carritos.", description = "Retorna el listado global de todos los registros en el sistema.")
+    @GetMapping
+    public ResponseEntity<List<CarritoResponseDTO>> listarTodosLosCarritos() {
+        return ResponseEntity.ok(carritoService.obtenerTodos());
+    }
 
     //------------------------------
     //CRUD estándar
     //------------------------------
 
     //Obtener todos los carritos
-    @GetMapping
+    /*@GetMapping
     public ResponseEntity<List<CarritoResponseDTO>> obtenerTodos() {
         return ResponseEntity.ok(carritoService.obtenerTodos());
-    }
+    }*/
 
-    //Obtener carrito por ID
+    /*//Obtener carrito por ID
     @GetMapping("/{id}")
     public ResponseEntity<CarritoResponseDTO> obtenerPorId(@PathVariable Long id) {
         return ResponseEntity.ok(carritoService.obtenerPorId(id));
-    }
+    }*/
 
     //Guardar (crear) nuevo carrito
     @PostMapping

@@ -1,14 +1,18 @@
 package cl.sda1085.carritos.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
-public class CarritoResponseDTO {
+@NoArgsConstructor
+
+@EqualsAndHashCode(callSuper = false)
+@Builder
+public class CarritoResponseDTO extends RepresentationModel<CarritoResponseDTO> {
 
     private Long id;
     private Long idUsuario;
