@@ -3,10 +3,12 @@ package cl.sda1085.carritos.assembler;
 import cl.sda1085.carritos.controller.CarritoController;
 import cl.sda1085.carritos.dto.CarritoResponseDTO;
 import org.springframework.hateoas.server.RepresentationModelAssembler;
+import org.springframework.stereotype.Component;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Component
 public class CarritoModelAssembler implements RepresentationModelAssembler<CarritoResponseDTO, CarritoResponseDTO> {
 
     @Override
