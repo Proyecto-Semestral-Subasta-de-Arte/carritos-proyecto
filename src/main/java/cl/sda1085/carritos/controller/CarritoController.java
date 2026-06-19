@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/carritos")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 @Tag(name = "Carritos", description = "Controlador para la gestión y trazabilidad de ítems en el carrito de compras.")
 public class CarritoController {
 
